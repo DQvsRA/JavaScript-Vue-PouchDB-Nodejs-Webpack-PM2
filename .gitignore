@@ -1,0 +1,8 @@
+/libs/
+/db/*
+/logs/*
+/node_modules/
+/.idea/
+/public/javascripts/*
+/public/stylesheets/style.css
+/public/assets/fonts/*

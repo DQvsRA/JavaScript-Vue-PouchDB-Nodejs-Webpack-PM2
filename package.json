@@ -1,0 +1,51 @@
+{
+  "name": "ucds",
+  "version": "0.1.0",
+  "author": "Vladimir Minkin <vladimir.minkin@gmail.com>",
+  "private": true,
+  "scripts": {
+    "start": "pm2 startOrRestart ./cfg/ecosystem.config.js --update-env --no-pmx --no-vizion",
+    "restart": "pm2 restart ucds --update-env",
+    "kill": "pm2 kill",
+    "logs": "pm2 logs ucds --lines 1000",
+    "stop": "pm2 delete ucds",
+    "show": "pm2 show ucds",
+    "monit": "pm2 monit ucds",
+    "fauxton": "fauxton -c http://localhost:3000",
+    "watch": "webpack -d --watch --config ./cfg/webpack.config",
+    "build": "webpack --config ./cfg/webpack.config"
+  },
+  "dependencies": {
+    "body-parser": "~1.15.2",
+    "browser-sync": "^2.18.7",
+    "compression": "^1.6.2",
+    "cookie-parser": "~1.4.3",
+    "express": "^4.14.0",
+    "express-pouchdb": "^2.2.0",
+    "hbs": "~4.0.1",
+    "install": "^0.8.4",
+    "jsonfile": "*",
+    "lodash": "^4.17.4",
+    "morgan": "^1.7.0",
+    "pouchdb": "^6.1.1",
+    "pouchdb-authentication": "^0.5.5",
+    "pouchy": "^11.0.3",
+    "serve-favicon": "~2.3.0",
+    "vue": "^2.1.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0",
+    "cross-env": "^3.0.0",
+    "css-loader": "^0.25.0",
+    "file-loader": "^0.9.0",
+    "jquery": "^3.1.1",
+    "less-loader": "^2.2.3",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "vue-loader": "^10.0.0",
+    "vue-template-compiler": "^2.1.0",
+    "webpack": "^2.2.0"
+  }
+}
