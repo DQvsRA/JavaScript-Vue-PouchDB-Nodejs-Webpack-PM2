@@ -1,11 +1,9 @@
 /**
  * Created by Vladimir Minkin on 2/11/17.
  */
-import _ from 'lodash';
-
 export default class UserVO
 {
-    constructor(source, email, role)
+    constructor(source, email, password, role)
     {
         let isSourceNULL = _.isNull(source);
         let isSourceString = _.isString(source);
@@ -13,12 +11,13 @@ export default class UserVO
         if(isSourceString || isSourceNULL || isSourceUndefined)
         {
             _.defaults(this, {
-                    _id         : source || ""
+                    id          : source || ""
                 ,   email       : email || ""
+                ,   password    : password || ""
+                ,   role        : role || ""
                 ,   name        : ""
                 ,   surname     : ""
                 ,   birthday    : ""
-                ,   role        : role || ""
                 ,   status      : ""
                 ,   logged      : false
                 ,   registered  : false

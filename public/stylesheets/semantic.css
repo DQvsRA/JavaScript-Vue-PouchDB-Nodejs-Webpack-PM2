@@ -17196,7 +17196,7 @@ ol.ui.horizontal.list li:before,
 }
 
 /*--------------------
-        Field
+        FormField
 ---------------------*/
 
 .ui.form .field {
@@ -17629,7 +17629,7 @@ ol.ui.horizontal.list li:before,
   display: flex;
 }
 
-/* On Field(s) */
+/* On FormField(s) */
 
 .ui.form .fields.error .field label,
 .ui.form .field.error label,
@@ -17878,7 +17878,7 @@ ol.ui.horizontal.list li:before,
 *******************************/
 
 /*--------------------
-     Required Field
+     Required FormField
 ---------------------*/
 
 .ui.form .required.fields:not(.grouped) > .field > label:after,
@@ -17927,7 +17927,7 @@ ol.ui.horizontal.list li:before,
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Inverted Field */
+/* Inverted FormField */
 
 .ui.inverted.form input:not([type]),
 .ui.inverted.form input[type="date"],
@@ -17948,7 +17948,7 @@ ol.ui.horizontal.list li:before,
 }
 
 /*--------------------
-     Field Groups
+     FormField Groups
 ---------------------*/
 
 /* Grouped Vertically */
