@@ -1,20 +1,24 @@
 <template>
     <div class="ui login middle aligned center aligned grid">
         <div class="column">
-            <HT2 v-bind="{ color:'teal', imageSrc:'assets/images/logo.png',
-                content:'Log-in to your account' }"/>
+            <HT2 v-bind="{
+                color:'teal',
+                imageSrc:'assets/images/logo.png',
+                content:'Log-in to your account'
+            }"></HT2>
             <form class="ui large form">
                 <div class="ui stacked segment">
-                    <FormField v-bind="{ icon:'user', value:email,
-                        placeholder:'E-mail address'
-                    }" @changed="updateEmail"
-                    />
-                    <FormField v-bind = "{ icon:'lock', value:password,
-                        placeholder:'Password'
-                    }" @changed="updatePassword"
-                    />
+                    <FormField v-bind="{ icon:'user', placeholder:'E-mail address' }"
+                               :value="email"
+                               @changed="updateEmail"
+                    ></FormField>
+                    <FormField v-bind = "{ icon:'lock', placeholder:'Password' }"
+                               :value="password"
+                               @changed="updatePassword"
+                    ></FormField>
                     <div class="ui fluid large teal submit button"
-                        @click.stop="loginClicked">Login</div>
+                        @click.stop="loginClicked">Login
+                    </div>
                 </div>
                 <div class="ui error message"></div>
             </form>

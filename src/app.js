@@ -11,11 +11,15 @@ const
 ;
 
 const DB_URL = "/api";
+POUCHDB.debug.enable('*');
 
 const LOCAL_POUCH = POUCHDB.defaults(
 {
     prefix: './db/data/'
 });
+// new LOCAL_POUCH('_ucds').delete();
+// new LOCAL_POUCH('_users').delete();
+// new LOCAL_POUCH('_session').delete();
 
 const EXPRESS_POUCH = require('express-pouchdb')(LOCAL_POUCH,
 {
@@ -53,7 +57,9 @@ function InitializeApp () {
     express.set('views'         , PATH.join(__dirname, '../pages'));
     express.set('view engine'   , 'hbs');
     express.set('x-powered-by'  , false);
-    express.set('db'            , new LOCAL_POUCH('ucds'));
+    express.set('ucds'          , new LOCAL_POUCH('_ucds'));
+    express.set('users'         , new LOCAL_POUCH('_users'));
+    express.set('session'       , new LOCAL_POUCH('_session'));
 
     express.use(LOGGER('dev'));
     express.use(COMPRESSION({level:0}));
@@ -62,7 +68,7 @@ function InitializeApp () {
     express.use(BODY_PARSER.urlencoded({ extended: false }));
     express.use(EXPRESS.static(PATH.join(__dirname, '../public')));
     express.use(DB_URL, EXPRESS_POUCH);
-    // express.use(FAUXTON_INTERCEPT);
+    express.use(FAUXTON_INTERCEPT);
 
     require('./server/router')(express);
 

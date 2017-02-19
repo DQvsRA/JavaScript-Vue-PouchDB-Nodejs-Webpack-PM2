@@ -1,10 +1,10 @@
 <template>
-    <Login
+    <Login v-if="ready"
         @emailChanged = "emailChanged"
         @passwordChanged = "passwordChanged"
         @loginClicked = "loginClicked"
-        :email = "email"
-        :password = "password"
+        :email = "user.email"
+        :password = "user.password"
     />
 </template>
 
@@ -12,17 +12,14 @@
     body {
         background-color: #EAEAEA;
     }
+    [v-cloak] { display: none; }
 </style>
-
 <script>
-    import PouchDB from "pouchdb";
-    import ServerDefinition from "../../../model/consts/ServerDefinition"
-    import Collections from "../../../model/consts/Collections"
-    import UserVO from "../../../model/vos/UserVO"
+    import UserVO       from "../../../model/vos/UserVO"
 
-    PouchDB.plugin(require('pouchdb-authentication'));
-
-    const db = new PouchDB(ServerDefinition.ADDRESS + Collections.USERS);
+    import GetUserBeforeCreateCommand from "./commands/GetUserBeforeCreateCommand"
+    import LoginUserCommand from "./commands/LoginUserCommand"
+    import SignUpUserCommand from "./commands/SignupUserCommand"
 
     export default {
         name: "Entrance",
@@ -31,27 +28,40 @@
         },
         methods: {
             loginClicked() {
-                console.log("loginClicked");
+                const user = this.$data.user;
+                    user.registered
+                ?   new LoginUserCommand()
+                :   new SignUpUserCommand()
+                .execute(user)
+                .then((result) => {
+                    console.log("USER:", result)
+                })
             },
-            emailChanged(value){ this.email = value; },
-            passwordChanged(value){ this.password = value; }
+            emailChanged(value){ this.user.email = value; },
+            passwordChanged(value){ this.user.password = value; }
         },
         beforeCreate() {
-            let that = this;
-            db.getSession()
-            .then(function(response)
-            {
-                let userContext = response.userCtx;
-                if (_.isNull(userContext.name)) {
-                    that.logged = false;
-                    that.email = "new user";
+            const that = this;
+            new GetUserBeforeCreateCommand().execute()
+            .then((result)=> {
+                if(_.isNull(result)) {
+                    that.user.logged = false;
+                    that.user.email = "admin@site.org" + new Date().getTime();
+                    that.user.password = "123";
                 } else {
-                    that.logged = true;
+                    that.user.logged = true;
+                    that.user.id = result.id;
+                    that.user.password = "";
+                    that.user.email = result.name;
                 }
-            }).catch(function (err) {
-
-            });
+                this.ready = true;
+            }).catch(err => console.log("ERROR > Entrance -> beforeCreate", err))
         },
-        data: () => new UserVO()
+        data() {
+            return {
+                user: new UserVO(),
+                ready: false
+            }
+        }
     };
 </script>

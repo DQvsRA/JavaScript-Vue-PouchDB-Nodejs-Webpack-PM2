@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const path    = require('path');
 
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+
 const BUILD_DIR = path.resolve(__dirname, '../public/javascripts');
 const APP_DIR   = path.resolve(__dirname, '../src/client/pages');
 
@@ -10,6 +12,9 @@ const config = {
         entrance  : APP_DIR + '/entrance/index.js',
         vendor    : [
             'pouchdb',
+            'pouchdb-authentication',
+            // 'pouchdb-auth',
+            // 'pouchy',
             'lodash',
             'semantic'
         ]
@@ -21,7 +26,8 @@ const config = {
     resolve: {
         alias: {
             'vue$': 'vue/dist/vue.common.js',
-            semantic: path.resolve('./libs/semantic/dist/semantic.js')
+            semantic: path.resolve('./libs/semantic/dist/semantic.js'),
+            // "pouchdb-auth": path.resolve('./libs/pouchdb/pouchdb-auth.min.js')
         }
     },
     plugins: [
@@ -32,7 +38,19 @@ const config = {
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery'
-        })
+        }),
+        // new BrowserSyncPlugin({
+        //     // browse to http://localhost:3000/ during development,
+        //     // ./public directory is being served
+        //     host: 'localhost',
+        //     port: 3001,
+        //     cors: true,
+        //     // proxy the Webpack Dev Server endpoint
+        //     // (which should be serving on http://localhost:3100/)
+        //     // through BrowserSync
+        //     proxy: 'http://localhost:3000/'
+        //     // server: { baseDir: ['public'] }
+        // })
     ],
     module : {
         rules : [
