@@ -2,7 +2,7 @@
  * Created by Vladimir Minkin on 2/19/17.
  */
 
-import { USERS }    from "../../../../model/dbs"
+import { USERS }    from "../../../dbs"
 import LoginUserCommand from "./LoginUserCommand"
 
 export default class SignupUserCommand {

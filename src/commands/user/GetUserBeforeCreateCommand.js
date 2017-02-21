@@ -2,8 +2,8 @@
  * Created by Vladimir Minkin on 2/19/17.
  */
 
-import { USERS }    from "../../../../model/dbs"
-import LocalObjects from "../../../../model/consts/LocalObjects"
+import { USERS }    from "../../model/dbs"
+import LocalObjects from "../../model/consts/LocalObjects"
 
 export default class GetUserBeforeCreateCommand {
     execute(){
@@ -20,7 +20,7 @@ export default class GetUserBeforeCreateCommand {
                 return Promise.resolve(null);
             } else {
                 return USERS.getUser(localUser.data.name);
-                return USERS.remove(localUser);
+                // return USERS.remove(localUser);
             }
         }).catch(err => Promise.resolve(null))
     }

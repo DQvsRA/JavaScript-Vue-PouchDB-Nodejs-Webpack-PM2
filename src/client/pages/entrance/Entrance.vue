@@ -1,10 +1,10 @@
 <template>
-    <Login v-if="ready"
-        @emailChanged = "emailChanged"
-        @passwordChanged = "passwordChanged"
-        @loginClicked = "loginClicked"
-        :email = "user.email"
-        :password = "user.password"
+    <Login v-if="ready" v-cloak
+           @emailChanged = "emailChanged"
+           @passwordChanged = "passwordChanged"
+           @loginClicked = "loginClicked"
+           :email = "email"
+           :password = "password"
     />
 </template>
 
@@ -15,51 +15,44 @@
     [v-cloak] { display: none; }
 </style>
 <script>
-    import UserVO       from "../../../model/vos/UserVO"
+    import UserStore        from "../../../model/stores/UserStore"
+    import UserActions      from "../../../model/consts/actions/UserActions"
+    import UserMutations    from "../../../model/consts/mutations/UserMutations"
 
-    import GetUserBeforeCreateCommand from "./commands/GetUserBeforeCreateCommand"
-    import LoginUserCommand from "./commands/LoginUserCommand"
-    import SignUpUserCommand from "./commands/SignupUserCommand"
+    import {
+        mapState,
+        mapActions,
+        mapMutations
+    } from 'vuex';
 
     export default {
         name: "Entrance",
         components: {
-            Login : require('./components/login/Login.vue')
+            Login : require('./components/Login.vue')
+        },
+        store: UserStore,
+        computed: {
+            ...mapState([
+                'logged',
+                'email',
+                'password'
+            ])
         },
         methods: {
-            loginClicked() {
-                const user = this.$data.user;
-                    user.registered
-                ?   new LoginUserCommand()
-                :   new SignUpUserCommand()
-                .execute(user)
-                .then((result) => {
-                    console.log("USER:", result)
-                })
-            },
-            emailChanged(value){ this.user.email = value; },
-            passwordChanged(value){ this.user.password = value; }
+            ...mapActions({
+                loginClicked    : UserActions.LOGIN_START,
+                initialize      : UserActions.INITIALIZE,
+            }),
+            ...mapMutations({
+                emailChanged    : UserMutations.SET_EMAIL,
+                passwordChanged : UserMutations.SET_PASSWORD
+            })
         },
-        beforeCreate() {
-            const that = this;
-            new GetUserBeforeCreateCommand().execute()
-            .then((result)=> {
-                if(_.isNull(result)) {
-                    that.user.logged = false;
-                    that.user.email = "admin@site.org" + new Date().getTime();
-                    that.user.password = "123";
-                } else {
-                    that.user.logged = true;
-                    that.user.id = result.id;
-                    that.user.password = "";
-                    that.user.email = result.name;
-                }
-                this.ready = true;
-            }).catch(err => console.log("ERROR > Entrance -> beforeCreate", err))
+        created() {
+            this.initialize().then(() => this.ready = true);
         },
         data() {
             return {
-                user: new UserVO(),
                 ready: false
             }
         }

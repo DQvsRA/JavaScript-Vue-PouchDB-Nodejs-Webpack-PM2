@@ -64,8 +64,8 @@
             }
         },
         components: {
-            FormField : require('../../../../common/form/FormField.vue'),
-            HT2 : require('../../../../common/header/HT2.vue')
+            FormField : require('../../../common/form/FormField.vue'),
+            HT2 : require('../../../common/header/HT2.vue')
         }
     };
 </script>

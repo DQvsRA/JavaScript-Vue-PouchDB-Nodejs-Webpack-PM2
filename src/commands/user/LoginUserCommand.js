@@ -2,8 +2,8 @@
  * Created by Vladimir Minkin on 2/19/17.
  */
 
-import { USERS }    from "../../../../model/dbs"
-import LocalObjects from "../../../../model/consts/LocalObjects"
+import { USERS }    from "../../../dbs"
+import LocalObjects from "../../LocalObjects"
 
 export default class LoginUserCommand {
     execute(user){
