@@ -96,11 +96,11 @@
             progress(val,old){
                 if(old == 0 && val > 0){
                     // Callback Event when it's started
-                    this.$dispatch('loading-bar:started');
+                    this.$dispatch('LoadingBar:started');
                 }
                 if(val > 1 && val < 100){
                     // Callback Event when it's loading
-                    this.$dispatch('loading-bar:loading');
+                    this.$dispatch('LoadingBar:loading');
                 }
                 // When the progress end
                 if(this.progress == 100){
@@ -123,7 +123,7 @@
                                 this.full = '';
                                 this.show = true;
                                 // Callback Event when it's loaded and totally gone
-                                this.$dispatch('loading-bar:loaded');
+                                this.$dispatch('LoadingBar:loaded');
                             });
                             // Duration to Waiting for slick hiding animation
                         },250);
@@ -139,7 +139,7 @@
             error(val,old){
                 this.progress = 100;
                 // Callback Event when it's error
-                this.$dispatch('loading-bar:error');
+                this.$dispatch('LoadingBar:error');
             }
         },
         methods: {
@@ -150,7 +150,7 @@
                     // When loading bar end
                 }else{
                     // Make it stuck at 100 to waiting the animation
-                    return{ width: `100%` };
+                    return { width: `100%` };
                 }
             }
         }

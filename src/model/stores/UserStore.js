@@ -11,8 +11,8 @@ import UserActions from '../consts/actions/UserActions'
 import UserMutations from '../consts/mutations/UserMutations'
 
 import GetUserBeforeCreateCommand from "../../commands/user/GetUserBeforeCreateCommand"
-// import LoginUserCommand from "./user/LoginUserCommand"
-// import SignUpUserCommand from "./user/SignupUserCommand"
+import LoginUserCommand from "../../commands/user/LoginUserCommand"
+import SignUpUserCommand from "../../commands/user/SignupUserCommand"
 
 const userStore = new Vuex.Store({
     state: new UserVO(),
@@ -32,23 +32,25 @@ const userStore = new Vuex.Store({
             }).catch(err => console.log("ERROR > UserActions.INITIALIZE", err))
         },
         [UserActions.LOGIN_START](state) {
-            console.log("LOGIN_START", state);
-            // const user = this.$data.user;
-////                user.registered
-////                    ?   new LoginUserCommand()
-////                    :   new SignUpUserCommand()
-////                        .execute(user)
-////                        .then((result) => {
-////                            console.log("USER:", result)
-////                        })
+           console.log("LOGIN_START", state.state);
+           const user = state.state;
+           user.registered
+           ?   new LoginUserCommand()
+           :   new SignUpUserCommand()
+               .execute(user)
+               .then((result) => {
+                   console.log("USER:", result)
+               })
         },
     },
     mutations: {
         [UserMutations.SET_EMAIL](state, value) {
-            console.log("SET_EMAIL", state, value);
+            console.log("SET_EMAIL", value);
+            state.email = value;
         },
         [UserMutations.SET_PASSWORD](state, value) {
-            console.log("SET_PASSWORD", state, value);
+            console.log("SET_PASSWORD", value);
+            state.password = value;
         }
     }
 });

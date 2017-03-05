@@ -1,11 +1,12 @@
 <template>
-    <Login v-if="ready" v-cloak
+    <Login v-if="ready" keep-alive
            @emailChanged = "emailChanged"
            @passwordChanged = "passwordChanged"
            @loginClicked = "loginClicked"
            :email = "email"
            :password = "password"
     />
+    <Spinner v-else></Spinner>
 </template>
 
 <style>
@@ -28,7 +29,8 @@
     export default {
         name: "Entrance",
         components: {
-            Login : require('./components/Login.vue')
+            Login : require('./components/Login.vue'),
+            Spinner: require('./../../common/loading/Spinner.vue')
         },
         store: UserStore,
         computed: {
@@ -49,7 +51,12 @@
             })
         },
         created() {
-            this.initialize().then(() => this.ready = true);
+            this.initialize()
+                .then(() =>
+//                setTimeout(()=>{
+                    this.ready = true
+//                }, 1000)
+            );
         },
         data() {
             return {
