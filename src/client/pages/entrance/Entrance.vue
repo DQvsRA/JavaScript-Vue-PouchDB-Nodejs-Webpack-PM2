@@ -1,57 +1,67 @@
 <template>
-    <Login
-        @emailChanged = "emailChanged"
-        @passwordChanged = "passwordChanged"
-        @loginClicked = "loginClicked"
-        :email = "email"
-        :password = "password"
+    <Login v-if="ready" keep-alive
+           @emailChanged = "emailChanged"
+           @passwordChanged = "passwordChanged"
+           @loginClicked = "loginClicked"
+           :email = "email"
+           :password = "password"
     />
+    <Spinner v-else></Spinner>
 </template>
 
 <style>
     body {
         background-color: #EAEAEA;
     }
+    [v-cloak] { display: none; }
 </style>
-
 <script>
-    import PouchDB from "pouchdb";
-    import ServerDefinition from "../../../model/consts/ServerDefinition"
-    import Collections from "../../../model/consts/Collections"
-    import UserVO from "../../../model/vos/UserVO"
+    import UserStore        from "../../../model/stores/UserStore"
+    import UserActions      from "../../../model/consts/actions/UserActions"
+    import UserMutations    from "../../../model/consts/mutations/UserMutations"
 
-    PouchDB.plugin(require('pouchdb-authentication'));
-
-    const db = new PouchDB(ServerDefinition.ADDRESS + Collections.USERS);
+    import {
+        mapState,
+        mapActions,
+        mapMutations
+    } from 'vuex';
 
     export default {
         name: "Entrance",
         components: {
-            Login : require('./components/login/Login.vue')
+            Login : require('./components/Login.vue'),
+            Spinner: require('./../../common/loading/Spinner.vue')
+        },
+        store: UserStore,
+        computed: {
+            ...mapState([
+                'logged',
+                'email',
+                'password'
+            ])
         },
         methods: {
-            loginClicked() {
-                console.log("loginClicked");
-            },
-            emailChanged(value){ this.email = value; },
-            passwordChanged(value){ this.password = value; }
+            ...mapActions({
+                loginClicked    : UserActions.LOGIN_START,
+                initialize      : UserActions.INITIALIZE,
+            }),
+            ...mapMutations({
+                emailChanged    : UserMutations.SET_EMAIL,
+                passwordChanged : UserMutations.SET_PASSWORD
+            })
         },
-        beforeCreate() {
-            let that = this;
-            db.getSession()
-            .then(function(response)
-            {
-                let userContext = response.userCtx;
-                if (_.isNull(userContext.name)) {
-                    that.logged = false;
-                    that.email = "new user";
-                } else {
-                    that.logged = true;
-                }
-            }).catch(function (err) {
-
-            });
+        created() {
+            this.initialize()
+                .then(() =>
+//                setTimeout(()=>{
+                    this.ready = true
+//                }, 1000)
+            );
         },
-        data: () => new UserVO()
+        data() {
+            return {
+                ready: false
+            }
+        }
     };
 </script>

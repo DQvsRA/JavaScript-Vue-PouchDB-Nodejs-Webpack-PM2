@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const path    = require('path');
 
+// const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+
 const BUILD_DIR = path.resolve(__dirname, '../public/javascripts');
 const APP_DIR   = path.resolve(__dirname, '../src/client/pages');
 
@@ -10,6 +12,7 @@ const config = {
         entrance  : APP_DIR + '/entrance/index.js',
         vendor    : [
             'pouchdb',
+            'pouchdb-authentication',
             'lodash',
             'semantic'
         ]
@@ -21,7 +24,7 @@ const config = {
     resolve: {
         alias: {
             'vue$': 'vue/dist/vue.common.js',
-            semantic: path.resolve('./libs/semantic/dist/semantic.js')
+            semantic: path.resolve('./libs/semantic/dist/semantic.js'),
         }
     },
     plugins: [
@@ -52,8 +55,9 @@ const config = {
             },
             {
                 test : /\.js$/,
+                loader : 'babel-loader',
                 include : APP_DIR,
-                loader : 'babel-loader'
+                exclude : /node_modules/
             }
         ]
     },

@@ -3,5 +3,6 @@
  */
 
 export default {
-    USERS: "users"
+    USERS: "_users",
+    UCDS: "ucds"
 }
