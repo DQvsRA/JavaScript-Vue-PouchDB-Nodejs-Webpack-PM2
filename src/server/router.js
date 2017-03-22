@@ -1,6 +1,7 @@
 const
-    site      = require('./pages/site'),
-    entrance  = require('./pages/entrance')
+    site      = require('./pages/site')
+,   entrance  = require('./pages/entrance')
+,   dashboard  = require('./pages/dashboard')
 ;
 
 const ERROR_NOT_IMPLM = 'Not Implemented';
@@ -14,6 +15,7 @@ exports = module.exports = function(server)
      //front end
      server.route('/').get(site.render);
      server.route('/entrance').get(entrance.render);
+     server.route('/dashboard').get(dashboard.render);
 
      // API ALL
      server.all('/api/*', function(req, res, next){

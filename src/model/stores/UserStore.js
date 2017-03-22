@@ -39,7 +39,8 @@ const userStore = new Vuex.Store({
            :   new SignUpUserCommand()
                .execute(user)
                .then((result) => {
-                   console.log("USER:", result)
+                   console.log("USER:", result);
+                   window.location.href = "./dashboard";
                })
         },
     },

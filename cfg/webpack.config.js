@@ -10,6 +10,7 @@ const config = {
     entry:  {
         site      : APP_DIR + '/site/index.js',
         entrance  : APP_DIR + '/entrance/index.js',
+        dashboard : APP_DIR + '/dashboard/index.js',
         vendor    : [
             'pouchdb',
             'pouchdb-authentication',
