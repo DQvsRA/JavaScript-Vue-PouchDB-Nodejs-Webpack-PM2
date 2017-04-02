@@ -55,7 +55,7 @@
                 .then(() =>
 //                setTimeout(()=>{
                     this.ready = true
-//                }, 1000)
+//                }, 2000)
             );
         },
         data() {
