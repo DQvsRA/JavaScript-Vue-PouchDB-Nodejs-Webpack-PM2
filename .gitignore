@@ -1,4 +1,5 @@
 /libs/
+!/libs/semantic/dist/semantic.js
 /db/*
 /logs/*
 /node_modules/
