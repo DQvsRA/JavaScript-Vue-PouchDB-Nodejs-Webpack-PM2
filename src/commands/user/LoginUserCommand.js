@@ -9,7 +9,10 @@ export default class LoginUserCommand {
     execute(user){
         return USERS.login(user.email, user.password)
         .then(() => user.logged = true )
-        .then(() => USERS.put({ _id: LocalObjects.USER, data: user }))
+        .then(() => USERS.put({
+            _id: LocalObjects.USER,
+            data: user
+        }))
         .catch(err => {
             console.log("ERROR > LoginUserCommand", err);
             Promise.resolve(null)

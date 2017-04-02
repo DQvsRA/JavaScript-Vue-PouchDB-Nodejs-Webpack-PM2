@@ -4,15 +4,18 @@
 
 import Collections from "./consts/Collections"
 import ServerDefinition from "./consts/ServerDefinition"
+import LocalObjects from "./consts/LocalObjects"
 
 import PouchDB from "pouchdb";
 
 PouchDB.plugin(require("pouchdb-authentication"));
 
 const USERS = new PouchDB(ServerDefinition.ADDRESS + Collections.USERS);
-new PouchDB('local_users').sync(USERS, { live: true, retry: true });
+const UCDS = new PouchDB(ServerDefinition.ADDRESS + Collections.UCDS);
 
-export { USERS };
+new PouchDB(LocalObjects.USER).sync(USERS, { live: true, retry: true });
+
+export { USERS, UCDS };
 
 
 // import Pouchy from "pouchy";

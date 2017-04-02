@@ -5,23 +5,26 @@
 import { USERS }    from "../../model/dbs"
 import LocalObjects from "../../model/consts/LocalObjects"
 
-export default class GetUserBeforeCreateCommand {
+export default class GetUserCommand {
     execute(){
         return Promise.all([
-            USERS.get(LocalObjects.USER),
             USERS.getSession(),
+            USERS.get(LocalObjects.USER),
         ])
         .then(values => {
-            console.log("GetUserBeforeCreateCommand", values);
-            const localUser = values[0];
-            const sessionResponse = values[1];
+            console.log("> GetUserCommand values:", values);
+            const localUser = values[1];
+            const sessionResponse = values[0];
             const userContext = sessionResponse.userCtx;
             if (!localUser && _.isNull(userContext.name)) {
                 return Promise.resolve(null);
             } else {
                 return USERS.getUser(localUser.data.name);
-                // return USERS.remove(localUser);
             }
-        }).catch(err => Promise.resolve(null))
+        })
+        .catch(err => {
+            console.log("> GetUserCommand", err);
+            Promise.resolve(null)
+        })
     }
 }

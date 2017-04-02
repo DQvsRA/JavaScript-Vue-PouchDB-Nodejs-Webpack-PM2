@@ -12,7 +12,7 @@ const config = {
         entrance  : APP_DIR + '/entrance/index.js',
         dashboard : APP_DIR + '/dashboard/index.js',
         vendor    : [
-            'pouchdb',
+            'pouchy',
             'pouchdb-authentication',
             'lodash',
             'semantic'

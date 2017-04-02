@@ -17,9 +17,14 @@ const LOCAL_POUCH = POUCHDB.defaults(
 {
     prefix: './db/data/'
 });
-// new LOCAL_POUCH('_ucds').delete();
-// new LOCAL_POUCH('_users').delete();
-// new LOCAL_POUCH('_session').delete();
+
+const DB_UCDS = new LOCAL_POUCH('_ucds');
+const DB_USERS = new LOCAL_POUCH('_users');
+const DB_SESSION = new LOCAL_POUCH('_session');
+
+// DB_UCDS.destroy();
+// DB_USERS.destroy();
+// DB_SESSION.destroy();
 
 const EXPRESS_POUCH = require('express-pouchdb')(LOCAL_POUCH,
 {
@@ -31,12 +36,13 @@ const EXPRESS_POUCH = require('express-pouchdb')(LOCAL_POUCH,
     }
 });
 
-const FAUXTON_PATH = PATH.join(DB_URL, '/_utils/');
+const FAUXTON_PATH = PATH.join(DB_URL, '/_utils');
 const FAUXTON_INTERCEPT = function(req, res, next){
     "use strict";
     let referer = req.header('Referer');
     if (!referer) return next();
     let parsed = URL.parse(referer);
+    console.log(parsed.pathname.indexOf(FAUXTON_PATH));
     if (0 === parsed.pathname.indexOf(FAUXTON_PATH)) {
         return EXPRESS_POUCH(req, res);
     }
@@ -57,9 +63,12 @@ function InitializeApp () {
     express.set('views'         , PATH.join(__dirname, '../pages'));
     express.set('view engine'   , 'hbs');
     express.set('x-powered-by'  , false);
-    express.set('ucds'          , new LOCAL_POUCH('_ucds'));
-    express.set('users'         , new LOCAL_POUCH('_users'));
-    express.set('session'       , new LOCAL_POUCH('_session'));
+    express.set('ucds'          , DB_UCDS);
+    express.set('users'         , DB_USERS);
+    express.set('session'       , DB_SESSION);
+
+    express.use(DB_URL, EXPRESS_POUCH);
+    express.use(FAUXTON_INTERCEPT);
 
     express.use(LOGGER('dev'));
     express.use(COMPRESSION({level:0}));
@@ -67,8 +76,6 @@ function InitializeApp () {
     express.use(BODY_PARSER.json());
     express.use(BODY_PARSER.urlencoded({ extended: false }));
     express.use(EXPRESS.static(PATH.join(__dirname, '../public')));
-    express.use(DB_URL, EXPRESS_POUCH);
-    express.use(FAUXTON_INTERCEPT);
 
     require('./server/router')(express);
 
@@ -86,11 +93,12 @@ function HandleError404(req, res, next) {
     err.status = 404;
     next(err);
 }
+
 function HandleErrorRender(err, req, res, next) {
     console.log("ERROR:", err.status, err.message);
     res.status(err.status || 500);
     res.render('error', { message: err.message, error: err.status });
 }
 
-module.exports = express;
 InitializeApp();
+module.exports = express;

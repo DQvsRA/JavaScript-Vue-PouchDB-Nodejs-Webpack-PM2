@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import Entrance from './Dashboard.vue'
+import Dashboard from './Dashboard.vue'
 
 new Vue({
     el: '#root',
-    render: h => h(Entrance)
+    render: h => h(Dashboard)
 });

@@ -6,5 +6,9 @@ export default {
     INITIALIZE: "initialize",
     LOGIN_START: "loginStart",
     LOGIN_SUCCESS: "loginSuccess",
-    LOGIN_FAILURE: "loginFailure"
+    LOGIN_FAILURE: "loginFailure",
+
+    SIGNUP_START: "signupStart",
+    SIGNUP_SUCCESS: "signupSuccess",
+    SIGNUP_FAILURE: "signupFailure",
 }

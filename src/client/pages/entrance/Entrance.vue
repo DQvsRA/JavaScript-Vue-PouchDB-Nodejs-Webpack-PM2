@@ -42,7 +42,7 @@
         },
         methods: {
             ...mapActions({
-                loginClicked    : UserActions.LOGIN_START,
+                loginClicked    : UserActions,
                 initialize      : UserActions.INITIALIZE,
             }),
             ...mapMutations({
@@ -53,9 +53,9 @@
         created() {
             this.initialize()
                 .then(() =>
-//                setTimeout(()=>{
+                setTimeout(()=>{
                     this.ready = true
-//                }, 2000)
+                }, 1000)
             );
         },
         data() {
