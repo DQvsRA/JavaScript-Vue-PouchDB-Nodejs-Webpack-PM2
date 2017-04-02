@@ -1,5 +1,6 @@
 /libs/
 /db/data/*
+!/db/data/.gitkeep
 /logs/*
 /node_modules/
 /.idea/
