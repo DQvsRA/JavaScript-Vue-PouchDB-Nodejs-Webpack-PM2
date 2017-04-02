@@ -42,7 +42,7 @@
         },
         methods: {
             ...mapActions({
-                loginClicked    : UserActions,
+                loginClicked    : UserActions.LOGIN_START,
                 initialize      : UserActions.INITIALIZE,
             }),
             ...mapMutations({
