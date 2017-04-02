@@ -31,9 +31,8 @@ actions: {
             return user.logged;
         }).catch(err => console.log("ERROR > UserActions.INITIALIZE", err))
     },
-    [UserActions.LOGIN_START](state) {
+    [UserActions.SIGNUP_START](state) {
         "use strict";
-
     },
     [UserActions.LOGIN_START](state) {
        console.log("LOGIN_START", state.state);
@@ -44,7 +43,7 @@ actions: {
            .execute(user)
            .then((result) => {
                console.log("USER:", result);
-               window.location.href = "./dashboard";
+               // window.location.href = "./dashboard";
            })
     },
 },
