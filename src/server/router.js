@@ -25,7 +25,7 @@ exports = module.exports = function(server)
           }
      });
 
-     /* USERS */
+     /* USERS_DB */
      // after user succesfully registered he gets a mails
     //  server.route('/api/users/register').post( users.register )
     //       .get(function(req, res, next)     { res.status(500).send({ error:ERROR_NOT_IMPLM }); })

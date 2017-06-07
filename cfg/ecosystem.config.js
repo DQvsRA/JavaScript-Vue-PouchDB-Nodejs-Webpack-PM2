@@ -9,9 +9,11 @@ apps : [
     script    : "./src/app.js",
     exec_mode : "fork",
     env: {
+        PORT: 3000,
         NODE_ENV: "development",
     },
     env_production : {
+        PORT: 3000,
         NODE_ENV: "production"
     },
     watch: ["./src/server"],

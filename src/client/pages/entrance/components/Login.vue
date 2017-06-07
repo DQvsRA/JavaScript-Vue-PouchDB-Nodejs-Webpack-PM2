@@ -28,6 +28,7 @@
         </div>
     </div>
 </template>
+
 <style scoped>
     .grid {
         height: 100%;

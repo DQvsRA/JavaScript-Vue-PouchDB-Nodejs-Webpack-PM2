@@ -15,6 +15,7 @@
     }
     [v-cloak] { display: none; }
 </style>
+
 <script>
     import UserStore        from "../../../model/stores/UserStore"
     import UserActions      from "../../../model/consts/actions/UserActions"
@@ -32,7 +33,7 @@
             Login : require('./components/Login.vue'),
             Spinner: require('./../../common/loading/Spinner.vue')
         },
-        store: UserStore,
+        store: UserStore, // <-------------- STORE MAPPING
         computed: {
             ...mapState([
                 'logged',
@@ -51,8 +52,7 @@
             })
         },
         created() {
-            this.initialize()
-                .then(() =>
+            this.initialize().then(() =>
                 setTimeout(()=>{
                     this.ready = true
                 }, 1000)

@@ -10,22 +10,22 @@ import PouchDB from "pouchdb";
 
 PouchDB.plugin(require("pouchdb-authentication"));
 
-const USERS = new PouchDB(ServerDefinition.ADDRESS + Collections.USERS);
+const USERS_DB = new PouchDB(ServerDefinition.ADDRESS + Collections.USERS);
 const UCDS = new PouchDB(ServerDefinition.ADDRESS + Collections.UCDS);
 
-new PouchDB(LocalObjects.USER).sync(USERS, { live: true, retry: true });
+new PouchDB(LocalObjects.USER).sync(USERS_DB, { live: true, retry: true });
 
-export { USERS, UCDS };
+export { USERS_DB, UCDS };
 
 
 // import Pouchy from "pouchy";
 //
 // Pouchy.PouchDB.plugin(require("pouchdb-authentication"));
 //
-// const USERS = new Pouchy({
-//     name: Collections.USERS,
+// const USERS_DB = new Pouchy({
+//     name: Collections.USERS_DB,
 //     replicate: 'sync',
-//     url: ServerDefinition.ADDRESS + Collections.USERS
+//     url: ServerDefinition.ADDRESS + Collections.USERS_DB
 // });
 //
-// export { USERS };
+// export { USERS_DB };

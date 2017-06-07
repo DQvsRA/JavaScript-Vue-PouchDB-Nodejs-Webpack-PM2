@@ -10,6 +10,8 @@ const
 ,   POUCHDB        = require('pouchdb')
 ;
 
+const ENV = process.env;
+
 const DB_URL = "/api";
 POUCHDB.debug.enable('*');
 
@@ -54,12 +56,10 @@ const express = EXPRESS();
 const logError = DEBUG('app:error');
 logError.log = console.error.bind(console);
 
-function InitializeApp () {
-
-    const ENV = process.env;
-
+function InitializeApp ()
+{
     // view engine setup
-    express.set('port'          , ENV.PORT || 3000);
+    express.set('port'          , ENV.PORT || 8000 );
     express.set('views'         , PATH.join(__dirname, '../pages'));
     express.set('view engine'   , 'hbs');
     express.set('x-powered-by'  , false);
