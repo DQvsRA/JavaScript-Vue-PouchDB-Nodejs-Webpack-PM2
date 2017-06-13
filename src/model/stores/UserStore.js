@@ -18,7 +18,7 @@ const userStore = new Vuex.Store(
 {
     state: new UserVO(),
     actions: {
-        [UserActions.INITIALIZE](store) { console.log("> UserActions.INITIALIZE", state.state);
+        [UserActions.INITIALIZE](store) { console.log("> UserActions.INITIALIZE", store.state);
             const user = store.state;
             return new GetUserCommand()
                 .execute()
