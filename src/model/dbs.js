@@ -10,8 +10,16 @@ import PouchDB from "pouchdb";
 
 PouchDB.plugin(require("pouchdb-authentication"));
 
-const USERS_DB = new PouchDB(ServerDefinition.ADDRESS + Collections.USERS);
-const UCDS = new PouchDB(ServerDefinition.ADDRESS + Collections.UCDS);
+const ajaxOpts = {
+    ajax: {
+        headers: {
+            [ServerDefinition.HEADER_API_KEY]: ServerDefinition.HEADER_API_VALUE
+        }
+    }
+};
+
+const USERS_DB = new PouchDB(ServerDefinition.ADDRESS + Collections.USERS, ajaxOpts);
+const UCDS = new PouchDB(ServerDefinition.ADDRESS + Collections.UCDS, ajaxOpts);
 
 new PouchDB(LocalObjects.USER).sync(USERS_DB, { live: true, retry: true });
 

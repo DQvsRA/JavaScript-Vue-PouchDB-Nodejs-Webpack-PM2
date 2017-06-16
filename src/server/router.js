@@ -12,18 +12,20 @@ const HEADER_API_VALUE = "mysuperpuperapikey";
 
 exports = module.exports = function(server)
 {
+    // API ALL
+    server.all('/api/*', function(req, res, next){
+        if(req.headers[HEADER_API_KEY] && req.headers[HEADER_API_KEY] == HEADER_API_VALUE) next();
+        else {
+            res.status(500).send({ error: ERROR_WRONG_API_KEY });
+        }
+    });
+
      //front end
      server.route('/').get(site.render);
      server.route('/entrance').get(entrance.render);
      server.route('/dashboard').get(dashboard.render);
 
-     // API ALL
-     server.all('/api/*', function(req, res, next){
-          if(req.headers[HEADER_API_KEY] && req.headers[HEADER_API_KEY] == HEADER_API_VALUE) next();
-          else {
-              res.status(500).send({ error: ERROR_WRONG_API_KEY });
-          }
-     });
+
 
      /* USERS_DB */
      // after user succesfully registered he gets a mails

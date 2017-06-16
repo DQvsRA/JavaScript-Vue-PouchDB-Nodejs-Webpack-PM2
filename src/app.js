@@ -28,6 +28,7 @@ const DB_SESSION = new LOCAL_POUCH('_session');
 // DB_USERS.destroy();
 // DB_SESSION.destroy();
 
+// const REPLICA_DB = require('http-pouchdb')(LOCAL_POUCH, 'http://127.0.0.1:5984');
 const EXPRESS_POUCH = require('express-pouchdb')(LOCAL_POUCH,
 {
     configPath: "./db/config.json",
@@ -67,6 +68,8 @@ function InitializeApp ()
     express.set('users'         , DB_USERS);
     express.set('session'       , DB_SESSION);
 
+    require('./server/router')(express);
+
     express.use(DB_URL, EXPRESS_POUCH);
     express.use(FAUXTON_INTERCEPT);
 
@@ -76,8 +79,6 @@ function InitializeApp ()
     express.use(BODY_PARSER.json());
     express.use(BODY_PARSER.urlencoded({ extended: false }));
     express.use(EXPRESS.static(PATH.join(__dirname, '../public')));
-
-    require('./server/router')(express);
 
     // error handlers
     express.use(HandleError404); // catch 404 and forward to error handler

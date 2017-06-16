@@ -25,6 +25,7 @@
     "express": "^4.14.0",
     "express-pouchdb": "*",
     "hbs": "~4.0.1",
+    "http-pouchdb": "^2.1.2",
     "install": "^0.8.4",
     "jsonfile": "*",
     "lodash": "^4.17.4",
